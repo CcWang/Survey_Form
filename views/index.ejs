@@ -1,0 +1,61 @@
+<html>
+<head>
+ <title>Index Page</title>
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<h2>Welcome</h2>
+				<h3>Add a User!</h3>
+			</div>
+			<div class="col-md-8">
+				<form action='/result' class='form-horizontal' role='form' method='post'>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Your Name:</label>
+						<div class="col-sm-10">
+							<input type="text"  name= 'name' class="form-control" id="name" placeholder="Your name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" >Dojo Location:</label>
+						<div class="col-sm-10">
+							<select name="location">
+								<option>Mountian View</option>
+								<option>San Jose</option>
+								<option>Seattle, WA</option>
+							</select>
+							
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" >Favoirte Language:</label>
+						<div class="col-sm-10">
+							<select name="lan">
+								<option>JavaScript</option>
+								<option>PHP</option>
+								<option>Rails</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="comment">Comment (optional)</label>
+						<div class="col-sm-10">
+							<textarea  name= 'comment' class="form-control" id="comment" placeholder="Your Comment"></textarea>
+						</div>
+					</div>
+				<input type='submit' value='Submit' class="btn btn-primary">
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
