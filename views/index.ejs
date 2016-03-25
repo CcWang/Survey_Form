@@ -1,6 +1,7 @@
 <html>
 <head>
  <title>Index Page</title>
+  <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
 <!-- jQuery library -->
@@ -8,26 +9,49 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		// body...
+		var socket = io.connect();
+		var message = '';
+		$('form').submit(function(){
+			socket.emit('posting_form',{name:$('#name').val(),location: $('#location').val(), lan:$('#lan').val(), comment:$('#comment').val()});
+			socket.on("updated_message", function(data){
+				console.log(data.data);
+				message += "You emitted the following information to the server: ";
+				message += '{name: "' + data.data.name+'", location: "' + data.data.location + '", language: "' + data.data.lan + '", comment: "' + data.data.comment + '"} ';
+			})
+			socket.on('random_number', function(data){
+				message +="Your lucky number emiitted by the server is ";
+				message +=data.random_number;
+				$('p').html(message);
+			})
+			return false;
+		})
+	})
+</script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
+			<hr>
+				<p style="background: green; color:white; font-style: bold;"></p>
 				<h2>Welcome</h2>
 				<h3>Add a User!</h3>
 			</div>
 			<div class="col-md-8">
-				<form action='/result' class='form-horizontal' role='form' method='post'>
+				<form action='/' class='form-horizontal' role='form' method="post">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="name">Your Name:</label>
 						<div class="col-sm-10">
-							<input type="text"  name= 'name' class="form-control" id="name" placeholder="Your name">
+							<input type="text"  class="form-control" id="name" placeholder="Your name">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" >Dojo Location:</label>
 						<div class="col-sm-10">
-							<select name="location">
+							<select id="location">
 								<option>Mountian View</option>
 								<option>San Jose</option>
 								<option>Seattle, WA</option>
@@ -38,7 +62,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" >Favoirte Language:</label>
 						<div class="col-sm-10">
-							<select name="lan">
+							<select  id="lan">
 								<option>JavaScript</option>
 								<option>PHP</option>
 								<option>Rails</option>
@@ -48,7 +72,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="comment">Comment (optional)</label>
 						<div class="col-sm-10">
-							<textarea  name= 'comment' class="form-control" id="comment" placeholder="Your Comment"></textarea>
+							<textarea  class="form-control" id="comment" placeholder="Your Comment"></textarea>
 						</div>
 					</div>
 				<input type='submit' value='Submit' class="btn btn-primary">

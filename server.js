@@ -12,12 +12,16 @@ app.get('/', function (req, res) {
 	res.render('index');
 })
 
-app.post('/result', function (req, res) {
-	console.log(req.body);
-	var user = req.body;
-	res.render('result', {user: user})
-})
-
-app.listen(8899, function(){
+var server = app.listen(8899, function(){
 	console.log('now listening to 8899');
+})
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', function(socket){
+	console.log('socket id', socket.id);
+	socket.on('posting_form', function(data){
+		var random_number = Math.floor(Math.random()*1000+1);
+		console.log(data);
+		socket.emit('updated_message',{data:data});
+		socket.emit('random_number', {random_number: random_number})
+	})
 })
